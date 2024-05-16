@@ -57,7 +57,7 @@ WebpackUpload.prototype.apply = function (compiler) {
 
             var outputPath = compilation.getPath(this.outputPath || compiler.outputPath),
                 outputFileSystem = this.outputFileSystem || compiler.outputFileSystem,
-                targetPath = outputFileSystem.join(outputPath, targetFile),
+                targetPath = path.join(outputPath, targetFile),
                 content = compilation.assets[file].source();
 
             if (!wpUploadOptions.keepLocal && !/\.html$/.test(targetFile)) {
@@ -114,7 +114,7 @@ WebpackUpload.prototype.apply = function (compiler) {
         });
     };
 
-    compiler.plugin('emit', onEmit);
+    compiler.hooks.emit.tapAsync('WebpackUpload', onEmit);
 };
 
 
